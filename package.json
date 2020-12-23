@@ -13,7 +13,7 @@
   "dependencies": {
     "@hapi/joi": "^17.1.1",
     "EventEmitter": "^1.0.0",
-    "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
     "crypto": "^1.0.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
