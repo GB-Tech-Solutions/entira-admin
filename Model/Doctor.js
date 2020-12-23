@@ -11,6 +11,10 @@ const DoctorsSchema = new mongoose.Schema({
         type:String,
         required:true
     } ,
+    Qualification:{
+        type:String,
+        required:true
+    } ,
     ImageID: {
         type: String,
         required: true

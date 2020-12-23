@@ -18,7 +18,7 @@ exports.Login = async(req, res,next) => {
         // req.body.password = await bcrypt.hash(req.body.password,saltRounds);
 
         let user = await Admin.find({userName:req.body.userName});
-        if(!user) return res.send({status:200,text:"Wrong Credentials"});
+        if(!user) return res.send({status:400,text:"Wrong Credentials"});
 
         let admin = user[0];
 
