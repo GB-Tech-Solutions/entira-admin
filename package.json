@@ -1,0 +1,24 @@
+{
+  "name": "Entira_Admin_Backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "EventEmitter": "^1.0.0",
+    "bcrypt": "^5.0.0",
+    "crypto": "^1.0.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.8",
+    "multer": "^1.4.2",
+    "multer-gridfs-storage": "^4.2.0"
+  }
+}
