@@ -13,15 +13,15 @@ const NewsSchema = new mongoose.Schema({
     } ,
     ImageID: {
         type: String,
-        required: true
+       
     },
     ImageFileName: {
         type: String,
-        required: true
+    
     },
     ImageOriginalName: {
         type: String,
-        required: true
+        
     },
     dateAdded:{
         type:Date,

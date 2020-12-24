@@ -61,18 +61,18 @@ exports.updateNews = async(req, res,next) => {
         let auth = getAuth(req.headers.token);
         if (!auth.id) return res.json({text:`Token Denied`,status:403});
 
-        if(req.file.id != ""){
-            req.body.ImageID = req.file.id; req.body.ImageFileName = req.file.filename; req.body.ImageOriginalName = req.file.originalname;
-        }
+        // console.log(req.file.id);
         
-        let news = await News.findById(req.params.id);
+        req.body.ImageID = req.file.id; req.body.ImageFileName = req.file.filename; req.body.ImageOriginalName = req.file.originalname;
+        
+        
+        let news = await News.findByIdAndUpdate(req.params.id,req.body);
         if(!news) return res.json({text:`News Not Found`,status:400});
 
-        let data = new News(req.body);
-        let save = await data.save();
 
-        res.send(save)
+        res.send({status:200,data:news,text:"Update Successfully"})
     } catch (error) {
+      
         return res.json({text:` Error Found `,error,status:400});
     }
 }

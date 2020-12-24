@@ -12,10 +12,10 @@ exports.addDoctor = async(req, res,next) => {
         if (!auth.id) return res.json({text:`Token Denied`,status:403});
 
         req.body.ImageID = req.file.id; req.body.ImageFileName = req.file.filename; req.body.ImageOriginalName = req.file.originalname;
-        console.log(req.body);
+        // console.log(req.body);
         let data = new Doctors(req.body);
         let save = await data.save();
-        return res.json({text:`News added successfully`,status:200,save})
+        return res.json({text:`Team Member added successfully`,status:200,save})
 
     } catch (error) {
         return res.json({text:` Error Found `,error,status:400});
@@ -57,7 +57,7 @@ exports.deleteDoctor = async(req, res,next) => {
         if (!auth.id) return res.json({text:`Token Denied`,status:403});
         
         let Doctor = await Doctors.findByIdAndDelete(req.params.id);
-        if(!Doctor) return res.json({text:`Doctor Not Found`,status:400});
+        if(!Doctor) return res.json({text:`Teams Not Found`,status:400});
         return res.json({text:"Team Member Deleted",status:200});
 
     } catch (error) {
@@ -68,19 +68,16 @@ exports.deleteDoctor = async(req, res,next) => {
 
 exports.updateDoctor = async(req, res,next) => {
     try {
-        if(req.file.id != ""){
-            req.body.ImageID = req.file.id; req.body.ImageFileName = req.file.filename; req.body.ImageOriginalName = req.file.originalname;
-        }
+        
+        req.body.ImageID = req.file.id; req.body.ImageFileName = req.file.filename; req.body.ImageOriginalName = req.file.originalname;
+        
         let auth = getAuth(req.headers.token);
         if (!auth.id) return res.json({text:`Token Denied`,status:403});
         
-        let doctor = await Doctors.findById(req.params.id);
-        if(!doctor) return res.json({text:`News Not Found`,status:400});
+        let doctor = await Doctors.findByIdAndUpdate(req.params.id,req.body);
+        if(!doctor) return res.json({text:`Team Not Found`,status:400});
 
-        let data = new Doctors(req.body);
-        let save = await data.save();
-
-        res.send(save)
+        res.send({status:200,text:"Updated SuccessFully",data:doctor})
 
     } catch (error) {
         return res.json({text:`Error Found`,error,status:400});
