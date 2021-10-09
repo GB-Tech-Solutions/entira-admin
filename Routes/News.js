@@ -11,7 +11,10 @@ const {getNews,addNews,updateNews,deleteNews,getNew} = require('../Controller/Ne
 
 router.route("/")
 .get(getNews)
-.post(upload.single("Image"),addNews)
+.post(upload.fields([
+    {name:"Image",maxCount:1},
+    {name:"newsPdf",maxCount:1}
+]),addNews)
 
 
 router.route("/:id")

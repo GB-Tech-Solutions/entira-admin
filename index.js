@@ -29,6 +29,7 @@ app.use((req, res, next ) => {
 
 
 app.use("/News",require('./Routes/News'))
+app.use("/Videos",require('./Routes/Videos'))
 app.use("/Image",require('./Routes/ImageShow'))
 app.use("/Doctor",require('./Routes/Doctor'))
 app.use("/Login",require('./Routes/Login'))

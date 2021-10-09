@@ -23,6 +23,18 @@ const NewsSchema = new mongoose.Schema({
         type: String,
         
     },
+    newsPdfID: {
+        type: String,
+       
+    },
+    newsPdf: {
+        type: String,
+    
+    },
+    newsPdfOriginalName: {
+        type: String,
+        
+    },
     dateAdded:{
         type:Date,
         default:Date.now,
@@ -37,6 +49,9 @@ const validateData = (body)=> {
         ImageID: joi.String().required(),
         ImageFileName:joi.String().required(),
         ImageOriginalName:joi.String().required(),
+        newsPdfID: joi.String().required(),
+        newsPdf:joi.String().required(),
+        newsPdfOriginalName:joi.String().required(),
     })
 
     return schema.validate(body);

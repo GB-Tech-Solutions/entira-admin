@@ -41,7 +41,8 @@ exports.addNews = async(req, res,next) => {
         let auth = getAuth(req.headers.token);
         if (!auth.id) return res.json({text:`Token Denied`,status:403});
 
-        req.body.ImageID = req.file.id; req.body.ImageFileName = req.file.filename; req.body.ImageOriginalName = req.file.originalname;
+        req.body.ImageID = req.files.Image[0].id; req.body.ImageFileName = req.files.Image[0].filename; req.body.ImageOriginalName = req.files.Image[0].originalname;
+        req.body.newsPdfID = req.files.newsPdf[0].id; req.body.newsPdf = req.files.newsPdf[0].filename; req.body.newsPdfOriginalName = req.files.newsPdf[0].originalname;
         // console.log(req.body,req.file);
         // const {error} = validateData(req.body);
         // if (error) return res.send({error:`${error}`,status:"400"});
@@ -62,8 +63,11 @@ exports.updateNews = async(req, res,next) => {
         if (!auth.id) return res.json({text:`Token Denied`,status:403});
 
         // console.log(req.file.id);
-        
-        req.body.ImageID = req.file.id; req.body.ImageFileName = req.file.filename; req.body.ImageOriginalName = req.file.originalname;
+        if( req.files.Image.length > 0)
+        req.body.ImageID = req.files.Image[0].id; req.body.ImageFileName = req.files.Image[0].filename; req.body.ImageOriginalName = req.files.Image[0].originalname;
+
+        if( req.files.newsPdf.length > 0)
+        req.body.newsPdfID = req.files.newsPdf[0].id; req.body.newsPdf = req.files.newsPdf[0].filename; req.body.newsPdfOriginalName = req.files.newsPdf[0].originalname;
         
         
         let news = await News.findByIdAndUpdate(req.params.id,req.body);
