@@ -13,7 +13,7 @@ const {getAuth,setAuth} = require('../Auth/Auth')
 exports.Login = async(req, res,next) => {
     try {
         //password hash: $2b$10$jmrdWuzWCgKGmLEEEF1eeewwhNwpAHKRa44TsJmKccpftGUEUeUzi
-        // password : Password1744@2020 userName: entita-admin@entira.com
+        // password : Password1744@2020 userName: entira-admin@entira.com
         
         // req.body.password = await bcrypt.hash(req.body.password,saltRounds);
 

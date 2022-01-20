@@ -33,6 +33,7 @@ app.use("/Videos",require('./Routes/Videos'))
 app.use("/Image",require('./Routes/ImageShow'))
 app.use("/Doctor",require('./Routes/Doctor'))
 app.use("/Login",require('./Routes/Login'))
+app.use("/appt",require('./Routes/Appointment'))
 
 
 const port = process.env.PORT || 5000;
