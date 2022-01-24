@@ -34,6 +34,10 @@ const AppointmentSchema = new mongoose.Schema({
         type:String,
         default:null
     },
+    dob:{
+        type:String,
+        required:true
+    },
     state:{
         type:String,
         default:"initiated" // initiated accepted processing processed completed cancelled

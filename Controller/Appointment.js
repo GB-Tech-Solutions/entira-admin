@@ -14,6 +14,7 @@ function create_UUID(){
     });
     return uuid;
 }
+// 1642-7425-6496-0
 
 
 
@@ -25,7 +26,7 @@ exports.addAppt = async(req, res,next) => {
         req.body.id = create_UUID()
         let data = new Appointment(req.body);
         let save = await data.save();
-        return res.json({text:`Team Member added successfully`,status:200,data:save})
+        return res.json({text:`Appointments added successfully`,status:200,data:save})
 
     } catch (error) {
         return res.json({text:` Error Found `,error,status:400});
@@ -36,8 +37,8 @@ exports.getAppts = async(req, res,next) => {
     try {
         let auth = getAuth(req.headers.token);
         if (!auth.id) return res.json({text:`Token Denied`,status:403});
-        let items = await Appointment.find();
-        if(!items) return res.json({text:`No appointment added`,status:400});
+        let items = await Appointment.find({view:true});
+        if(!items) return res.json({text:`No appointment found`,status:400});
         return res.send(items);
 
     } catch (error) {
@@ -52,8 +53,23 @@ exports.getAppt = async(req, res,next) => {
         if (!auth.id) return res.json({text:`Token Denied`,status:403});
         
         let item = await Appointment.findById(req.params.id);
-        if(!item) return res.json({text:`Doctor Not Found`,status:400});
+        if(!item) return res.json({text:`Appointment Not Found`,status:400});
         return res.send(item);
+
+    } catch (error) {
+        return res.json({text:`Error Found`,error,status:400});
+        next()
+    }
+}
+
+exports.deleteAppt = async(req, res,next) => {
+    try {
+        let auth = getAuth(req.headers.token);
+        if (!auth.id) return res.json({text:`Token Denied`,status:403});
+        
+        let item = await Appointment.findByIdAndUpdate(req.params.id,{$set:{view:false}});
+        if(!item) return res.json({text:`Appointment Not Found`,status:400});
+        return res.send({item,text:"Appointment deleted"});
 
     } catch (error) {
         return res.json({text:`Error Found`,error,status:400});
