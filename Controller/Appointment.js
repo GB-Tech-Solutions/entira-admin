@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
-
+const {subject, template } = require('../Sheared/Email/templateGmail');
+const {sendMessage, authorize,from,to } = require('../Sheared/Email/gmailConfig');
+const fs = require("fs");
 const {Appointment} = require("../Model/Appointment");
 
 const {getAuth,setAuth} = require('../Auth/Auth');
@@ -19,18 +21,39 @@ function create_UUID(){
 
 
 exports.addAppt = async(req, res,next) => {
-    try {
+    // try {
         let auth = getAuth(req.headers.token);
         if (!auth.id) return res.json({text:`Token Denied`,status:403});
-
+        const {scheduleDate, scheduleTime, name,email} = req.body;
         req.body.id = create_UUID()
-        let data = new Appointment(req.body);
-        let save = await data.save();
-        return res.json({text:`Appointments added successfully`,status:200,data:save})
+        // let data = new Appointment(req.body);
+        // let save = await data.save();
 
-    } catch (error) {
-        return res.json({text:` Error Found `,error,status:400});
-    }
+        const mailDetails = {
+			mailOptions: {
+				to: to,
+                cc:`${email}`,
+				from: `${from}`,
+				subject: subject,
+				body: template(scheduleDate,scheduleTime,name)
+			},
+			res: res,
+		};
+
+		fs.readFile("./Sheared/Email/credGmail.json", (err, content) => {
+			if (err) {
+				return res.status(400).json({
+					message: message.custom('Unable to send email!'),
+					error: err
+				});
+			}
+			authorize(JSON.parse(content), sendMessage, mailDetails);
+		});
+        return res.json({text:`Appointments added successfully`,status:200})
+
+    // } catch (error) {
+    //     return res.json({text:` Error Found `,error,status:400});
+    // }
 }
 //token : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZTJlMzhiNWVlZTMxNWU4Yzc3NmQ2MyIsImlhdCI6MTYwODc0NDUzMX0.T8Ck96I4qaFnwwwDm_OVJ6Vv2i29ozG5PkssfrWH1t0
 exports.getAppts = async(req, res,next) => {
