@@ -26,8 +26,8 @@ exports.addAppt = async(req, res,next) => {
         if (!auth.id) return res.json({text:`Token Denied`,status:403});
         const {scheduleDate, scheduleTime, name,email} = req.body;
         req.body.id = create_UUID()
-        // let data = new Appointment(req.body);
-        // let save = await data.save();
+        let data = new Appointment(req.body);
+        let save = await data.save();
 
         const mailDetails = {
 			mailOptions: {
