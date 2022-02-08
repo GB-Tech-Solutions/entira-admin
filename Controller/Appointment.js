@@ -17,11 +17,14 @@ function create_UUID(){
     return uuid;
 }
 // 1642-7425-6496-0
-
+function escapeRegExp(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+  }
+  
 
 
 exports.addAppt = async(req, res,next) => {
-    // try {
+    try {
         let auth = getAuth(req.headers.token);
         if (!auth.id) return res.json({text:`Token Denied`,status:403});
         const {scheduleDate, scheduleTime, name,email} = req.body;
@@ -51,16 +54,62 @@ exports.addAppt = async(req, res,next) => {
 		});
         return res.json({text:`Appointments added successfully`,status:200})
 
-    // } catch (error) {
-    //     return res.json({text:` Error Found `,error,status:400});
-    // }
+    } catch (error) {
+        return res.json({text:` Error Found `,error,status:400});
+    }
 }
 //token : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZTJlMzhiNWVlZTMxNWU4Yzc3NmQ2MyIsImlhdCI6MTYwODc0NDUzMX0.T8Ck96I4qaFnwwwDm_OVJ6Vv2i29ozG5PkssfrWH1t0
 exports.getAppts = async(req, res,next) => {
     try {
         let auth = getAuth(req.headers.token);
         if (!auth.id) return res.json({text:`Token Denied`,status:403});
-        let items = await Appointment.find({view:true});
+        let today = new Date();
+        let mm = (today.getMonth()+1);
+        let dd = today.getDate();
+        let yy = today.getFullYear();
+        let scheduleDate = `${String(mm).length == 1? "0"+mm:mm}/${String(dd).length == 1? "0"+dd:dd}/${yy}`
+        console.log(scheduleDate)
+        let items = await Appointment.find({view:true,scheduleDate:scheduleDate});
+        if(!items) return res.json({text:`No appointment found`,status:400});
+        return res.send(items);
+
+    } catch (error) {
+        return res.json({text:`Found Error`,error,status:400});
+        next()
+    }
+}
+
+exports.searchAppts = async(req, res,next) => {
+    try {
+        let auth = getAuth(req.headers.token);
+        if (!auth.id) return res.json({text:`Token Denied`,status:403});
+        
+        let email = escapeRegExp(req.body.email);
+        const mail_regex = new RegExp(email, 'gi');
+
+        let name = escapeRegExp(req.body.name);
+        const name_regex = new RegExp(name, 'gi');
+
+        let phoneNumber = escapeRegExp(req.body.phoneNumber);
+        const phone_regex = new RegExp(phoneNumber, 'gi');
+
+        let scheduleTime = escapeRegExp(req.body.scheduleTime);
+        const scheduleTime_regex = new RegExp(scheduleTime, 'gi');
+
+        let scheduleDate = escapeRegExp(req.body.scheduleDate);
+        const scheduleDate_regex = new RegExp(scheduleDate, 'gi');
+
+        let dob = escapeRegExp(req.body.dob);
+        const dob_regex = new RegExp(dob, 'gi');
+
+        let items = await Appointment.find({view:true,
+            email: req.body.email=="" ? /^$|/ : mail_regex,
+            name: req.body.name=="" ? /^$|/ : name_regex,
+            phoneNumber: req.body.phoneNumber =="" ? /^$|/ : phone_regex,
+            scheduleTime: req.body.scheduleTime =="" ? /^$|/ : scheduleTime_regex,
+            scheduleDate: req.body.scheduleDate=="" ? /^$|/ : scheduleDate_regex,
+            dob: req.body.dob=="" ? /^$|/ : dob_regex,
+        });
         if(!items) return res.json({text:`No appointment found`,status:400});
         return res.send(items);
 
