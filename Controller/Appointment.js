@@ -48,7 +48,7 @@ exports.addAppt = async(req, res,next) => {
                 cc:`${email}`,
 				from: `${from}`,
 				subject: subject,
-				body: template(scheduleDate,scheduleTime,name)
+				body: template(doc)
 			},
 			res: res,
 		};
