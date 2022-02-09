@@ -37,7 +37,7 @@ exports.addAppt = async(req, res,next) => {
             phoneNumber:req.body.phoneNumber,
             scheduleTime:req.body.scheduleTime,
             scheduleDate:req.body.scheduleDate,
-            message:req.body.massage
+            message:req.body.message
         }
         let data = new Appointment(doc);
         let save = await data.save();
