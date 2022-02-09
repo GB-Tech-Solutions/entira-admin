@@ -28,7 +28,7 @@ exports.addAppt = async(req, res,next) => {
         let auth = getAuth(req.headers.token);
         if (!auth.id) return res.json({text:`Token Denied`,status:403});
         const {scheduleDate, scheduleTime, name,email} = req.body;
-        req.body.id = create_UUID();
+        // req.body.id = create_UUID();
         let doc = {
             id:create_UUID(),
             name:req.body.name,
@@ -39,7 +39,7 @@ exports.addAppt = async(req, res,next) => {
             scheduleDate:req.body.scheduleDate,
             message:req.body.massage
         }
-        let data = new Appointment(req.body);
+        let data = new Appointment(doc);
         let save = await data.save();
 
         const mailDetails = {
