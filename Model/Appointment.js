@@ -30,7 +30,7 @@ const AppointmentSchema = new mongoose.Schema({
         type:Boolean,
         default:true
     },
-    massage:{
+    message:{
         type:String,
         default:null
     },
