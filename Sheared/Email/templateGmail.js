@@ -166,7 +166,7 @@ const template = (doc) =>{
     <td style="padding-bottom:25px;padding-left:20px;padding-right:20px;padding-top:25px;">
     <div style="font-family: sans-serif">
     <div style="font-size: 14px; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 16.8px; color: #ffffff; line-height: 1.2;">
-    <p style="margin: 0; text-align: center;"><span style="font-size:18px;">Appointment Confirmed</span></p>
+    <p style="margin: 0; text-align: center;"><span style="font-size:18px;">Appointment Details</span></p>
     </div>
     </div>
     </td>
