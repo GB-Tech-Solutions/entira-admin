@@ -1,7 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const EventEmitter = require('events');
-// const https = require('https');
+const https = require('https');
+const fs = require('fs');
 require('dotenv').config();
 
 const {MongoLink} = require('./Sheared/exports_file');
@@ -29,7 +30,7 @@ app.use((req, res, next ) => {
 })
 
 
-  app.get('/test', function (req, res) {
+  app.get('/', function (req, res) {
     return res.send("serverRunning")
  });
 
@@ -41,15 +42,16 @@ app.use("/Login",require('./Routes/Login'))
 app.use("/appt",require('./Routes/Appointment'))
 
 
-const httpsServer = https.createServer({
-    key: fs.readFileSync('/etc/letsencrypt/live/my_api_url/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/my_api_url/fullchain.pem'),
-  }, app);
+// const httpsServer = https.createServer({
+//     key: fs.readFileSync('../../../entira_ssl/935ebe6c4e73af62.pem'),
+//     cert: fs.readFileSync('../../../entira_ssl/935ebe6c4e73af62.crt'),
+//     ca: fs.readFileSync('../../../entira_ssl/gd_bundle-g2-g1.crt'),
+//   }, app);
 
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5005;
 app.listen( port, () => console.log('Express server started at port : ' + port) );
 
 // httpsServer.listen(port, () => {
-//     console.log('HTTPS Server running on port 443');
+//     console.log('HTTPS Server running on port 5005');
 // });
