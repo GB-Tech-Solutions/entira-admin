@@ -80,6 +80,7 @@ exports.getAppts = async(req, res,next) => {
         let scheduleDate = `${String(mm).length == 1? "0"+mm:mm}/${String(dd).length == 1? "0"+dd:dd}/${yy}`
         // console.log(scheduleDate)
         let items = await Appointment.find({view:true,scheduleDate:scheduleDate});
+        // let items = await Appointment.find({view:true});
         if(!items) return res.json({text:`No appointment found`,status:400});
         return res.send(items);
 
