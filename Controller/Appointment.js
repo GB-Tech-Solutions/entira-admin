@@ -37,7 +37,7 @@ exports.addAppt = async(req, res,next) => {
             phoneNumber:req.body.phoneNumber,
             scheduleTime:req.body.scheduleTime,
             scheduleDate:req.body.scheduleDate,
-            message:req.body.massage
+            message:req.body.message
         }
         let data = new Appointment(doc);
         let save = await data.save();
@@ -48,7 +48,7 @@ exports.addAppt = async(req, res,next) => {
                 cc:`${email}`,
 				from: `${from}`,
 				subject: subject,
-				body: template(scheduleDate,scheduleTime,name)
+				body: template(doc)
 			},
 			res: res,
 		};
@@ -80,6 +80,7 @@ exports.getAppts = async(req, res,next) => {
         let scheduleDate = `${String(mm).length == 1? "0"+mm:mm}/${String(dd).length == 1? "0"+dd:dd}/${yy}`
         // console.log(scheduleDate)
         let items = await Appointment.find({view:true,scheduleDate:scheduleDate});
+        // let items = await Appointment.find({view:true});
         if(!items) return res.json({text:`No appointment found`,status:400});
         return res.send(items);
 

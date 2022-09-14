@@ -109,4 +109,5 @@ module.exports.authorize = authorize;
 module.exports.sendMessage = sendMessage;
 
 module.exports.from = "entiraclinic@gbtechservice.com";
-module.exports.to = "abiswas@gbtechservice.com";
+// module.exports.to = "abiswas@gbtechservice.com";
+module.exports.to = "mpen@entiraclinic.com";
