@@ -39,6 +39,7 @@ app.use("/Image",require('./Routes/ImageShow'))
 app.use("/Doctor",require('./Routes/Doctor'))
 app.use("/Login",require('./Routes/Login'))
 app.use("/appt",require('./Routes/Appointment'))
+app.use("/page-visit",require('./Routes/Trace.route'))
 
 
 // const httpsServer = https.createServer({
