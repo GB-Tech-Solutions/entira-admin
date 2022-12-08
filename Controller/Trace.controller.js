@@ -3,7 +3,9 @@ const {PageVisits}= require("../Model/Trace.model");
 exports.trackSave = async(req, res,next) => {
     try {
         const {hashCode,body} = req.body;
-        let pageVisit = new PageVisits({hashCode,body});
+        const today = new Date();
+        const date = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate() ;
+        let pageVisit = new PageVisits({hashCode,body,date});
         pageVisit = await pageVisit.save();
         return res.send({text:"working",res:pageVisit})
 
