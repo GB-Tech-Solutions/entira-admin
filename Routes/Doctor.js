@@ -13,12 +13,9 @@ router.route("/")
 .get(getDoctors)
 .post(upload.single("Image"),addDoctor)
 
-
 router.route("/:id")
 .get(getDoctor)
 .put(upload.single("Image"),updateDoctor)
 .delete(deleteDoctor)
-
-
 
 module.exports = router;
